@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCM Épreuve 1 — DEC 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a2332;
+    --ink-soft: #3a4a5e;
+    --paper: #fbf9f5;
+    --paper-warm: #f4f0e8;
+    --accent: #8b2635;
+    --accent-soft: #a64d5a;
+    --gold: #b8924a;
+    --green: #4a6c3a;
+    --green-soft: #d8e4cf;
+    --red: #a83232;
+    --red-soft: #f0d6d6;
+    --line: #d8d2c4;
+    --shadow: 0 1px 0 rgba(26,35,50,.04), 0 4px 24px rgba(26,35,50,.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--paper);
+    background-image:
+      radial-gradient(ellipse at top left, rgba(184,146,74,.04) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(139,38,53,.03) 0%, transparent 50%);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    text-align: center;
+    padding: 24px 0 48px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  header::before {
+    content: "";
+    position: absolute;
+    top: 12px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 1px;
+    background: var(--gold);
+  }
+
+  .eyebrow {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(36px, 5vw, 52px);
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    margin-top: 6px;
+  }
+
+  .session-tag {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 14px;
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  /* ============ HOME / SETUP ============ */
+  .setup-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 40px 36px;
+    box-shadow: var(--shadow);
+    margin-bottom: 32px;
+  }
+
+  .setup-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .setup-card p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+
+  .field-group {
+    margin-bottom: 24px;
+  }
+
+  .field-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .theme-chip {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    padding: 14px 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  .theme-chip:hover {
+    border-color: var(--accent);
+    background: white;
+  }
+
+  .theme-chip.selected {
+    border-color: var(--accent);
+    background: white;
+    box-shadow: 0 0 0 2px rgba(139,38,53,.08);
+  }
+
+  .theme-chip-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--paper-warm);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .theme-chip.selected .theme-chip-num {
+    background: var(--accent);
+    color: white;
+  }
+
+  .theme-chip-content { flex: 1; min-width: 0; }
+  .theme-chip-title { font-weight: 600; margin-bottom: 2px; font-size: 13px; }
+  .theme-chip-meta { font-size: 11px; color: var(--ink-soft); letter-spacing: 0.04em; }
+
+  .input-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .number-input {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-family: inherit;
+    width: 100px;
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+
+  .number-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .quantity-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .qty-btn {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    padding: 10px 18px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+
+  .qty-btn:hover {
+    border-color: var(--accent);
+  }
+
+  .qty-btn.active {
+    background: var(--ink);
+    color: white;
+    border-color: var(--ink);
+  }
+
+  .start-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 16px 36px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    margin-top: 16px;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .start-btn:hover {
+    background: #6e1f2b;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(139,38,53,.2);
+  }
+
+  .start-btn:active { transform: translateY(0); }
+
+  /* ============ QUIZ ============ */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    gap: 16px;
+  }
+
+  .progress-info {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .progress-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .progress-total {
+    font-size: 13px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+
+  .timer {
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+    background: var(--paper-warm);
+    padding: 6px 14px;
+    border-radius: 100px;
+  }
+
+  .progress-bar-wrap {
+    height: 3px;
+    background: var(--paper-warm);
+    border-radius: 100px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+    transition: width 0.3s ease;
+    border-radius: 100px;
+  }
+
+  .question-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 36px 36px 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    animation: cardIn 0.4s cubic-bezier(.2,.8,.2,1);
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .theme-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    background: var(--paper-warm);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(139,38,53,.15);
+  }
+
+  .question-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 32px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+
+  .options { list-style: none; }
+
+  .option {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .option:hover:not(.disabled) {
+    border-color: var(--accent);
+    background: white;
+    transform: translateX(2px);
+  }
+
+  .option.disabled { cursor: default; }
+
+  .option-letter {
+    width: 28px; height: 28px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--line);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ink-soft);
+    background: white;
+    transition: all 0.2s;
+  }
+
+  .option:hover:not(.disabled) .option-letter {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .option.correct {
+    background: var(--green-soft);
+    border-color: var(--green);
+  }
+  .option.correct .option-letter {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+  }
+
+  .option.wrong {
+    background: var(--red-soft);
+    border-color: var(--red);
+  }
+  .option.wrong .option-letter {
+    background: var(--red);
+    color: white;
+    border-color: var(--red);
+  }
+
+  /* ============ FEEDBACK ============ */
+  .feedback {
+    margin-top: 28px;
+    padding: 22px 24px;
+    border-radius: 3px;
+    border-left: 3px solid;
+    animation: cardIn 0.3s ease;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .feedback.correct {
+    background: var(--green-soft);
+    border-left-color: var(--green);
+    color: var(--ink);
+  }
+
+  .feedback.wrong {
+    background: var(--red-soft);
+    border-left-color: var(--red);
+    color: var(--ink);
+  }
+
+  .feedback-label {
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .feedback.correct .feedback-label { color: var(--green); }
+  .feedback.wrong .feedback-label { color: var(--red); }
+
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+  }
+
+  .action-btn {
+    background: var(--ink);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+
+  .action-btn:hover {
+    background: var(--accent);
+    transform: translateX(2px);
+  }
+
+  .action-btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1.5px solid var(--line);
+  }
+
+  .action-btn-ghost:hover {
+    background: var(--paper-warm);
+    color: var(--ink);
+    transform: none;
+  }
+
+  /* ============ RESULTS ============ */
+  .results-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 56px 40px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+
+  .results-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .score-display {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    line-height: 1;
+    margin: 24px 0;
+  }
+
+  .score-percent {
+    font-size: 96px;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .score-percent .pct-symbol {
+    font-size: 48px;
+    color: var(--ink-soft);
+    font-style: normal;
+    margin-left: 4px;
+  }
+
+  .score-detail {
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+
+  .score-message {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--ink);
+    margin: 32px auto;
+    max-width: 480px;
+    line-height: 1.4;
+  }
+
+  .results-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+
+  .stat {
+    background: white;
+    padding: 20px;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+
+  .theme-breakdown {
+    text-align: left;
+    margin: 32px 0;
+  }
+
+  .theme-breakdown h3 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .theme-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .theme-bar-label {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+    width: 200px;
+    flex-shrink: 0;
+  }
+
+  .theme-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--paper-warm);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .theme-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    border-radius: 100px;
+    transition: width 0.6s ease;
+  }
+
+  .theme-bar-score {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--accent);
+    font-weight: 600;
+    width: 64px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .results-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  /* ============ REVIEW MODE ============ */
+  .review-section {
+    margin-top: 48px;
+    text-align: left;
+  }
+
+  .review-toggle {
+    background: transparent;
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+    padding: 12px 24px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+
+  .review-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .review-list {
+    display: none;
+    margin-top: 24px;
+  }
+
+  .review-list.visible { display: block; }
+
+  .review-item {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+
+  .review-item-q {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .review-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .review-status {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  .review-status.correct {
+    background: var(--green-soft);
+    color: var(--green);
+  }
+
+  .review-status.wrong {
+    background: var(--red-soft);
+    color: var(--red);
+  }
+
+  .review-item-answers {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+
+  .review-item-explanation {
+    font-size: 13px;
+    color: var(--ink);
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    line-height: 1.6;
+  }
+
+  /* ============ UTILITIES ============ */
+  .hidden { display: none !important; }
+
+  footer {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+  }
+
+  footer em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* keyboard hint */
+  .kbd-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+
+  .kbd {
+    display: inline-block;
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 2px 6px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 24px 16px 60px; }
+    .question-card { padding: 24px 20px; }
+    .question-text { font-size: 20px; }
+    .results-card { padding: 36px 20px; }
+    .score-percent { font-size: 72px; }
+    .actions { flex-direction: column; gap: 8px; align-items: stretch; }
+    .action-btn { width: 100%; text-align: center; }
+    .theme-bar-label { width: 140px; font-size: 12px; }
+    .quiz-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="eyebrow">Diplôme d'Expertise Comptable</div>
+    <h1>QCM <em>Épreuve 1</em></h1>
+    <div class="subtitle">Déontologie et réglementation professionnelle</div>
+    <div class="session-tag">Session Mai 2026 — À jour des décrets 2025</div>
+  </header>
+
+  <!-- ============ SETUP ============ -->
+  <div id="setup-screen">
+    <div class="setup-card">
+      <h2>Configurer la session</h2>
+      <p>Sélectionnez les thèmes à réviser et le nombre de questions souhaitées. La session sera chronométrée pour simuler les conditions de l'examen.</p>
+
+      <div class="field-group">
+        <label class="field-label">Thèmes</label>
+        <div class="theme-grid" id="theme-grid">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Nombre de questions</label>
+        <div class="quantity-buttons" id="qty-buttons">
+          <button class="qty-btn" data-n="10">10 questions</button>
+          <button class="qty-btn" data-n="20">20</button>
+          <button class="qty-btn active" data-n="30">30</button>
+          <button class="qty-btn" data-n="50">50</button>
+          <button class="qty-btn" data-n="all">Toutes</button>
+        </div>
+      </div>
+
+      <button class="start-btn" id="start-btn">Commencer la session →</button>
+    </div>
+
+    <div style="text-align:center;font-size:12px;color:var(--ink-soft);letter-spacing:0.04em;">
+      <span class="kbd-hint">
+        Astuce : utilisez les touches
+        <span class="kbd">A</span><span class="kbd">B</span><span class="kbd">C</span><span class="kbd">D</span>
+        et <span class="kbd">↵ Entrée</span> pour répondre rapidement
+      </span>
+    </div>
+  </div>
+
+  <!-- ============ QUIZ ============ -->
+  <div id="quiz-screen" class="hidden">
+    <div class="quiz-header">
+      <div class="progress-info">
+        <span class="progress-num" id="q-num">1</span>
+        <span class="progress-total">/ <span id="q-total">30</span></span>
+      </div>
+      <div class="timer" id="timer">00:00</div>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+    </div>
+
+    <div class="question-card" id="question-card">
+      <span class="theme-badge" id="theme-badge">Thème 1</span>
+      <div class="question-text" id="question-text"></div>
+      <ul class="options" id="options"></ul>
+      <div class="feedback hidden" id="feedback">
+        <span class="feedback-label" id="feedback-label"></span>
+        <span id="feedback-text"></span>
+      </div>
+      <div class="actions">
+        <button class="action-btn action-btn-ghost" id="quit-btn">Abandonner</button>
+        <button class="action-btn hidden" id="next-btn">Question suivante →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ RESULTS ============ -->
+  <div id="results-screen" class="hidden">
+    <div class="results-card">
+      <div class="results-eyebrow">Résultats de la session</div>
+      <div class="score-display">
+        <div class="score-percent"><span id="score-pct">0</span><span class="pct-symbol">%</span></div>
+        <div class="score-detail"><span id="score-correct">0</span> bonnes réponses sur <span id="score-total">0</span></div>
+      </div>
+
+      <div class="score-message" id="score-message"></div>
+
+      <div class="results-stats">
+        <div class="stat">
+          <div class="stat-num" id="stat-correct">0</div>
+          <div class="stat-label">Correctes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="stat-wrong">0</div>
+          <div class="stat-label">Erreurs</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="stat-time">00:00</div>
+          <div class="stat-label">Durée</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="stat-avg">0s</div>
+          <div class="stat-label">Moy / question</div>
+        </div>
+      </div>
+
+      <div class="theme-breakdown">
+        <h3>Réussite par thème</h3>
+        <div id="theme-breakdown"></div>
+      </div>
+
+      <div class="results-actions">
+        <button class="action-btn" id="restart-btn">Nouvelle session</button>
+        <button class="action-btn action-btn-ghost" id="review-btn">Revoir les questions</button>
+      </div>
+
+      <div class="review-section">
+        <div class="review-list" id="review-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <em>QCM DEC E1</em> — 118 questions à jour des décrets 2024-2025 — Bonne préparation
+  </footer>
+</div>
+
+<!-- ============ SCRIPT ============ -->
+<script id="questions-data" type="application/json">[{"theme": 1, "q": "Quel est le texte fondateur de la profession d'expert-comptable en France ?", "options": ["La loi du 1er juillet 1901", "L'ordonnance n° 45-2138 du 19 septembre 1945", "Le décret n° 2012-432 du 30 mars 2012", "La loi PACTE du 22 mai 2019"], "correct": 1, "explanation": "L'ordonnance n° 45-2138 du 19 septembre 1945 institue l'Ordre des experts-comptables et règlemente le titre et la profession. C'est le texte fondateur, modifié à de nombreuses reprises mais toujours en vigueur."}, {"theme": 1, "q": "Sous quelle tutelle ministérielle est placé l'Ordre des experts-comptables ?", "options": ["Ministère de la Justice", "Ministère de l'Économie", "Ministère du Travail", "Premier ministre"], "correct": 1, "explanation": "L'OEC est placé sous la tutelle du ministère de l'Économie. À retenir : 'Eco vs Justice' — EC = tutelle Économie, CAC = tutelle Justice."}, {"theme": 1, "q": "Quelle autorité a remplacé le H3C au 1er janvier 2024 ?", "options": ["L'AMF", "La H2A (Haute Autorité de l'Audit)", "L'Autorité des Normes Comptables", "Le CSOEC"], "correct": 1, "explanation": "Depuis le 1er janvier 2024, le Haut Conseil du commissariat aux comptes (H3C) est devenu la Haute Autorité de l'Audit (H2A), avec des compétences élargies (notamment durabilité)."}, {"theme": 1, "q": "Combien de membres compte le Collège de la H2A ?", "options": ["8 membres", "10 membres", "12 membres", "15 membres"], "correct": 2, "explanation": "Le Collège de la H2A est composé de 12 membres. La Commission des sanctions, distincte, comprend 5 membres."}, {"theme": 1, "q": "Combien de membres compte la Commission des sanctions de la H2A ?", "options": ["3 membres", "5 membres", "7 membres", "12 membres"], "correct": 1, "explanation": "La Commission des sanctions de la H2A est composée de 5 membres, distincts du Collège (qui en compte 12)."}, {"theme": 1, "q": "Combien de Conseils Régionaux de l'Ordre (CROEC) existe-t-il en France ?", "options": ["13 CROEC", "18 CROEC", "23 CROEC", "30 CROEC"], "correct": 2, "explanation": "Il existe 23 CROEC, alignés sur les 23 régions académiques. Mnémotechnique : '23 pour 23'."}, {"theme": 1, "q": "Depuis le décret n° 2025-131 du 13 février 2025, combien d'entrées comporte le Tableau de l'Ordre des experts-comptables ?", "options": ["3 sections + 8 listes (11 entrées)", "3 sections + 11 listes (14 entrées)", "2 sections + 10 listes (12 entrées)", "5 sections + 12 listes (17 entrées)"], "correct": 1, "explanation": "Depuis le décret 2025-131, le Tableau comporte 3 sections + 11 listes, soit 14 entrées au total. Les 3 nouveautés sont : 12° SPE, 13° SPFPL, 14° EC en entreprise."}, {"theme": 1, "q": "Parmi ces nouvelles catégories du Tableau de l'Ordre (depuis 2025), laquelle constitue une réelle nouveauté ?", "options": ["Les SCP", "Les EC en entreprise", "Les EC stagiaires", "Les EC honoraires"], "correct": 1, "explanation": "La 14° entrée 'liste des experts-comptables en entreprise' a été créée par le décret 2025-131 du 13/02/2025. Elle reflète l'évolution de la profession vers le salariat en entreprise."}, {"theme": 1, "q": "Que sont les AGC (Associations de Gestion et de Comptabilité) ?", "options": ["Des syndicats professionnels d'EC", "Des structures inscrites au Tableau de l'Ordre depuis 2004 pouvant exercer l'expertise comptable", "Des organismes de formation", "Des sociétés d'audit"], "correct": 1, "explanation": "Les AGC sont des associations à but non lucratif inscrites au Tableau de l'Ordre depuis 2004 (loi du 25 juillet 2004), pouvant exercer l'expertise comptable au profit de leurs adhérents (TPE, agriculteurs, artisans)."}, {"theme": 1, "q": "Sous quelle forme sociétaire un EC peut-il exercer son activité ?", "options": ["Uniquement en EI", "SEL, SA, SAS, SARL, SNC, SPE", "Uniquement en SARL", "Uniquement en SAS"], "correct": 1, "explanation": "L'EC peut exercer en SEL (SELARL, SELAS, SELAFA), en SA, SAS, SARL, SNC, ainsi qu'en société pluri-professionnelle d'exercice (SPE) depuis 2016."}, {"theme": 1, "q": "Quel texte régit principalement l'organisation du commissariat aux comptes ?", "options": ["L'ordonnance de 1945", "Le Code de commerce, Livre VIII", "Le décret de 2012", "La loi PACTE"], "correct": 1, "explanation": "Le commissariat aux comptes est régi par le Code de commerce, Livre VIII (art. L. 820-1 et suivants)."}, {"theme": 1, "q": "Depuis quelle date la publicité et le démarchage sont-ils autorisés pour les professionnels de l'expertise comptable ?", "options": ["Depuis 1945", "Depuis 1990", "Depuis 2012 (décret) / 2015 (loi Macron)", "Depuis 2024"], "correct": 2, "explanation": "Le décret de 2012 et la loi Macron de 2015 ont autorisé la publicité et le démarchage, sous réserve d'une communication sincère, exempte d'éléments comparatifs et respectueuse du secret."}, {"theme": 1, "q": "Les professionnels EC d'autres États membres de l'UE peuvent-ils exercer en France ?", "options": ["Non, jamais", "Oui, en libre prestation de services ou via une succursale", "Uniquement en partenariat avec un EC français", "Uniquement en libre prestation, jamais en succursale"], "correct": 1, "explanation": "Les professionnels UE/EEE peuvent exercer en France soit en libre prestation de services (déclaration préalable), soit en s'établissant via une succursale (inscription au Tableau marginal)."}, {"theme": 1, "q": "Quel est l'organe souverain de l'Ordre des experts-comptables au niveau national ?", "options": ["Le CROEC", "Le CSOEC (Conseil Supérieur de l'Ordre)", "La H2A", "Le ministère de l'Économie"], "correct": 1, "explanation": "Le Conseil Supérieur de l'Ordre des Experts-Comptables (CSOEC) est l'organe national souverain, chargé de la réglementation, des normes et de la représentation."}, {"theme": 1, "q": "Que signifie l'acronyme 'NPMQ' ?", "options": ["Norme Professionnelle de Maîtrise de la Qualité", "Norme Pratique de Mission Quotidienne", "Norme Professionnelle de Mission Qualité", "Nouvelle Procédure de Maîtrise de Qualité"], "correct": 0, "explanation": "La NPMQ est la Norme Professionnelle de Maîtrise de la Qualité, transposition française de l'ISQC 1 (norme internationale)."}, {"theme": 1, "q": "Quel décret constitue le 'règlement intérieur' de la profession EC ?", "options": ["Le décret n° 2012-432 du 30 mars 2012", "Le décret n° 2024-1127", "Le décret n° 2025-506", "Le décret du 19 septembre 1945"], "correct": 0, "explanation": "Le décret n° 2012-432 du 30 mars 2012 relatif à l'exercice de l'activité d'expertise comptable contient le Code de déontologie. Mnémotechnique : '45-12-RI'."}, {"theme": 1, "q": "Quel ministère exerce la tutelle sur les commissaires aux comptes ?", "options": ["Économie", "Justice", "Travail", "Finances"], "correct": 1, "explanation": "Les CAC sont sous tutelle du ministère de la Justice (anciennement le H3C, désormais la H2A étant une autorité publique indépendante)."}, {"theme": 1, "q": "L'EC peut-il exercer une activité commerciale ?", "options": ["Oui, sans restriction", "Non, l'art. 22 ord. 1945 l'interdit", "Uniquement avec autorisation préalable", "Uniquement après 10 ans d'exercice"], "correct": 1, "explanation": "L'article 22 de l'ordonnance de 1945 interdit à l'EC d'effectuer des actes de commerce. Une liste limitative d'activités compatibles est définie par les textes."}, {"theme": 1, "q": "Quelle structure juridique a été introduite par l'ordonnance du 31 mars 2016 ?", "options": ["La SEL", "La SCP", "La SPE (Société Pluri-professionnelle d'Exercice)", "La SAS"], "correct": 2, "explanation": "L'ordonnance n° 2016-394 du 31 mars 2016 a créé la SPE, permettant le regroupement de plusieurs professions libérales réglementées (EC, avocat, notaire, etc.)."}, {"theme": 1, "q": "Que signifie l'acronyme 'CSOEC' ?", "options": ["Conseil Supérieur de l'Ordre des Experts-Comptables", "Comité Supérieur d'Organisation des Experts-Comptables", "Centre Supérieur de l'Ordre", "Conseil des Sociétés d'Expertise Comptable"], "correct": 0, "explanation": "Le CSOEC est le Conseil Supérieur de l'Ordre des Experts-Comptables, organe national de représentation et de régulation."}, {"theme": 1, "q": "Quel décret a inséré le Chapitre VI sur les SPFPL d'expertise comptable dans le Code de déontologie ?", "options": ["Décret 2024-138", "Décret 2024-1127 du 4 décembre 2024", "Décret 2025-131", "Décret 2025-506"], "correct": 1, "explanation": "Le décret n° 2024-1127 du 4 décembre 2024 a inséré les articles 198 à 209 du Code de déontologie, créant le régime des Sociétés de Participations Financières de Profession Libérale d'expertise comptable."}, {"theme": 2, "q": "Le RGPD est-il applicable directement en droit français ?", "options": ["Non, il faut une loi de transposition", "Oui, application directe depuis le 25 mai 2018", "Uniquement aux entreprises de plus de 250 salariés", "Uniquement aux administrations publiques"], "correct": 1, "explanation": "Le RGPD (règlement UE 2016/679) est un règlement européen, donc d'application directe sans nécessité de transposition. Il s'applique depuis le 25 mai 2018."}, {"theme": 2, "q": "Quel est le seuil de détention pour qualifier un bénéficiaire effectif (BE) ?", "options": ["10% du capital", "Plus de 25% du capital ou des droits de vote", "33% du capital", "50% du capital"], "correct": 1, "explanation": "Le BE est défini comme la personne physique détenant directement ou indirectement plus de 25% du capital ou des droits de vote, ou exerçant un contrôle effectif. Mnémotechnique : 'BE 25'."}, {"theme": 2, "q": "Quelle est la sanction pénale de la violation du secret professionnel (art. 226-13 CP) ?", "options": ["6 mois + 7 500 €", "1 an + 15 000 €", "3 ans + 45 000 €", "5 ans + 75 000 €"], "correct": 1, "explanation": "L'article 226-13 du Code pénal punit la violation du secret professionnel d'1 an d'emprisonnement et 15 000 € d'amende. Mnémotechnique : '1+15'."}, {"theme": 2, "q": "Quelle est la sanction du 'tipping off' (informer le client de la déclaration TRACFIN) ?", "options": ["1 an + 15 000 €", "3 ans + 22 500 €", "5 ans + 22 500 €", "5 ans + 75 000 €"], "correct": 2, "explanation": "L'article L. 561-19 du CMF punit le 'tipping off' de 5 ans d'emprisonnement et 22 500 € d'amende. Mnémotechnique : '5+22,5'."}, {"theme": 2, "q": "Une lettre de mission est-elle obligatoire pour toute mission EC ?", "options": ["Non, uniquement pour les missions d'audit", "Oui, pour toute mission, annuelle obligatoire", "Uniquement pour les missions de plus de 6 mois", "Uniquement pour les nouvelles missions"], "correct": 1, "explanation": "L'article 151 du Code de déontologie impose une lettre de mission annuelle pour toute mission EC. Sans elle, la mission est irrégulière et engage la responsabilité de l'EC."}, {"theme": 2, "q": "Les honoraires conditionnels (liés à un résultat) sont-ils admis pour le CAC ?", "options": ["Oui, sans restriction", "Oui, avec autorisation du client", "Strictement interdits (art. L. 821-29 C. com.)", "Uniquement pour les missions complémentaires"], "correct": 2, "explanation": "L'article L. 821-29 du Code de commerce interdit strictement les honoraires conditionnels pour le CAC. Pour l'EC, ils sont fortement encadrés mais possibles dans certains cas (médiation, conseil ponctuel)."}, {"theme": 2, "q": "Quelle norme régit l'acceptation et le maintien de la mission de CAC ?", "options": ["NEP 200", "NEP 210", "NEP 9605", "NEP 700"], "correct": 2, "explanation": "La NEP 9605 régit l'acceptation et le maintien des missions de commissaire aux comptes. La NEP 210 concerne la lettre de mission."}, {"theme": 2, "q": "Quels sont les 3 piliers du dispositif LAB-FT pour les professionnels EC/CAC ?", "options": ["Connaissance / Vigilance / Déclaration", "Identification / Vérification / Conservation", "Information / Contrôle / Sanction", "Formation / Audit / Reporting"], "correct": 0, "explanation": "Les 3 piliers LAB-FT : (1) Prise de connaissance/identification du client (KYC) ; (2) Vigilance constante ; (3) Révélation/déclaration TRACFIN. Mnémotechnique : 'PVR'."}, {"theme": 2, "q": "À quel autorité s'effectue la déclaration de soupçon LAB-FT ?", "options": ["À la H2A", "À TRACFIN", "Au CSOEC", "Au procureur de la République"], "correct": 1, "explanation": "La déclaration de soupçon en matière de blanchiment se fait à TRACFIN (Traitement du Renseignement et Action contre les Circuits Financiers clandestins) par voie électronique uniquement."}, {"theme": 2, "q": "Sous quel délai le CAC doit-il notifier une violation de données à caractère personnel à la CNIL (RGPD) ?", "options": ["24 heures", "72 heures", "7 jours", "1 mois"], "correct": 1, "explanation": "L'article 33 du RGPD impose la notification des violations de données à la CNIL dans les 72 heures suivant la découverte."}, {"theme": 2, "q": "Quelle est la sanction maximale en cas de manquement grave au RGPD ?", "options": ["1 M€", "10 M€ ou 2% du CA", "20 M€ ou 4% du CA mondial", "100 M€"], "correct": 2, "explanation": "L'article 83 du RGPD prévoit des sanctions pouvant atteindre 20 millions d'euros ou 4% du chiffre d'affaires mondial annuel (le plus élevé des deux)."}, {"theme": 2, "q": "Le DPO (Délégué à la Protection des Données) est-il obligatoire pour tout cabinet EC ?", "options": ["Oui, toujours", "Non, uniquement sous conditions (suivi systématique, données sensibles à grande échelle)", "Uniquement pour les cabinets > 50 salariés", "Uniquement pour les EIP"], "correct": 1, "explanation": "Le DPO est obligatoire pour : (1) autorités publiques ; (2) entreprises dont l'activité principale = suivi systématique ; (3) entreprises traitant des données sensibles à grande échelle. La majorité des cabinets EC ne sont pas tenus, mais c'est recommandé."}, {"theme": 2, "q": "Selon le décret 2025-483 (en vigueur 01/07/2025), les franchises d'assurance RCP sont-elles opposables aux tiers ?", "options": ["Oui, totalement", "Oui, dans la limite de 50%", "Non, elles ne sont pas opposables aux tiers (art. 134 modifié)", "Uniquement pour les sinistres > 100 000 €"], "correct": 2, "explanation": "Depuis le décret 2025-483 du 30/05/2025 (en vigueur 01/07/2025), l'article 134 du Code de déontologie précise que les franchises ne sont pas opposables aux tiers : la victime peut être indemnisée même en présence d'une franchise au contrat."}, {"theme": 2, "q": "Quel est le montant minimum de garantie RCP pour un cabinet EC ?", "options": ["100 000 €", "500 000 €", "1 M€", "5 M€"], "correct": 2, "explanation": "Le montant minimum de garantie RCP est de 1 M€ pour les cabinets EC indépendants, plus pour les cabinets EIP."}, {"theme": 2, "q": "Une convention non autorisée doit-elle figurer dans le rapport spécial du CAC ?", "options": ["Non, elle est exclue du rapport", "Oui, avec mention de l'absence d'autorisation préalable", "Uniquement si elle dépasse 10 000 €", "Uniquement si elle a été détectée par le CAC"], "correct": 1, "explanation": "Les conventions non autorisées doivent figurer dans le rapport spécial du CAC avec mention de l'absence d'autorisation préalable. Le CAC ne peut pas omettre une convention dont il a connaissance."}, {"theme": 2, "q": "L'indépendance du CAC s'apprécie-t-elle au niveau du cabinet seul ou du réseau ?", "options": ["Uniquement du cabinet", "Uniquement du réseau", "Du cabinet ET du réseau", "Du réseau uniquement pour les EIP"], "correct": 2, "explanation": "L'indépendance s'apprécie au niveau du cabinet ET du réseau (art. R. 822-32 et s.). Toutes les entités liées sont prises en compte."}, {"theme": 2, "q": "Les EC et CAC sont-ils tenus à une obligation de formation continue ?", "options": ["Non, uniquement à la formation initiale", "Oui, pour les EC seulement", "Oui, pour les EC et les CAC", "Uniquement pour les jeunes diplômés"], "correct": 2, "explanation": "Les EC et les CAC sont tenus à une obligation de formation continue (40 heures/an pour le CAC). Manquement = sanction disciplinaire possible."}, {"theme": 2, "q": "Le CAC peut-il exercer simultanément en tant qu'EC sur la même entité ?", "options": ["Oui, sans restriction", "Oui, si le client donne son accord", "Non, c'est une auto-révision interdite", "Uniquement pour les EIP"], "correct": 2, "explanation": "Le cumul des missions de CAC et d'EC sur la même entité est interdit (auto-révision). Le cumul est possible pour des entités différentes, même du même groupe (avec précaution)."}, {"theme": 2, "q": "Une rotation obligatoire des associés signataires CAC s'applique-t-elle aux EIP ?", "options": ["Non, jamais", "Oui, tous les 5 ans", "Oui, tous les 7 ans", "Oui, tous les 10 ans (24 ans max avec appel d'offres)"], "correct": 3, "explanation": "Pour les EIP (Entités d'Intérêt Public), la rotation obligatoire des associés signataires est de 7 ans. La rotation du cabinet est de 10 ans (24 ans max avec appel d'offres)."}, {"theme": 2, "q": "Quel est le seuil de dépendance économique pour un cabinet CAC (honoraires d'un client unique) ?", "options": ["10% du CA total du réseau", "15% du CA", "25% du CA total du réseau (10% pour EIP)", "50% du CA"], "correct": 2, "explanation": "La dépendance économique est appréciée à 25% du CA total du réseau (10% pour les EIP). Au-delà, le mandat doit être réexaminé voire abandonné."}, {"theme": 2, "q": "L'EC est-il tenu de proposer un suppléant lorsqu'il accepte une mission de CAC ?", "options": ["Oui, toujours", "Depuis loi PACTE, suppléant facultatif pour les CAC personnes morales", "Uniquement pour les EIP", "Non, jamais"], "correct": 1, "explanation": "Depuis la loi PACTE (2019), le suppléant est facultatif pour les CAC personnes morales. Il reste obligatoire pour les CAC personnes physiques."}, {"theme": 2, "q": "Quelle est la sanction du défaut de révélation des faits délictueux par le CAC ?", "options": ["1 an + 15 000 €", "3 ans + 45 000 €", "5 ans + 75 000 €", "10 ans + 150 000 €"], "correct": 2, "explanation": "L'article L. 824-3 du Code de commerce punit la non-révélation des faits délictueux de 5 ans d'emprisonnement et 75 000 € d'amende. Mnémotechnique : '5+75'."}, {"theme": 2, "q": "Le CAC est-il tenu d'informer son client avant d'effectuer une déclaration TRACFIN ?", "options": ["Oui, c'est obligatoire", "Non, c'est strictement interdit (tipping off)", "Uniquement si le client le demande", "Uniquement après l'envoi"], "correct": 1, "explanation": "Informer le client de la déclaration TRACFIN constitue le 'tipping off', interdit par l'art. L. 561-19 CMF, sanctionné de 5 ans + 22 500 €."}, {"theme": 2, "q": "L'EC peut-il accepter de faire de la publicité comparative ?", "options": ["Oui, sans restriction", "Oui, avec mention 'comparatif'", "Non, la publicité doit être sincère et exempte d'éléments comparatifs", "Uniquement entre cabinets concurrents"], "correct": 2, "explanation": "Depuis la loi Macron 2015, la publicité est autorisée mais doit être sincère, factuelle, exempte d'éléments comparatifs et respectueuse du secret professionnel."}, {"theme": 3, "q": "Quelle norme régit la mission de présentation des comptes annuels ?", "options": ["NP 2300", "NP 2400", "NP 3100", "NP 4400"], "correct": 0, "explanation": "La NP 2300 régit la mission de présentation des comptes annuels, mission la plus fréquente, conduisant à une attestation de présentation. C'est l'objet du mémoire de DEC d'Achille."}, {"theme": 3, "q": "Quel niveau d'assurance apporte une mission NP 2300 ?", "options": ["Assurance raisonnable (élevée)", "Assurance modérée", "Aucune assurance (attestation)", "Assurance absolue"], "correct": 2, "explanation": "La mission de présentation NP 2300 ne donne aucune assurance. L'EC attestent qu'il n'a rien relevé qui le conduise à estimer que les comptes ne sont pas réguliers — c'est une attestation, non une certification."}, {"theme": 3, "q": "Quel niveau d'assurance apporte une mission d'examen limité (NP 2400) ?", "options": ["Assurance raisonnable", "Assurance modérée (négative)", "Aucune assurance", "Assurance absolue"], "correct": 1, "explanation": "La mission d'examen limité (NP 2400) apporte une assurance modérée, exprimée 'en négatif' : 'sur la base de notre examen, nous n'avons rien relevé qui nous laisse penser...'"}, {"theme": 3, "q": "À quoi correspond la NPMQ ?", "options": ["Norme de Présentation Mensuelle Qualité", "Norme Professionnelle de Maîtrise de la Qualité (transposition ISQC 1)", "Norme de Procédure de Mission Qualifiée", "Nouvelle Procédure Mensuelle Qualité"], "correct": 1, "explanation": "La NPMQ est la transposition française de la norme internationale ISQC 1. Elle définit les 6 éléments du système qualité obligatoire dans tout cabinet."}, {"theme": 3, "q": "Combien d'éléments comporte le système qualité défini par la NPMQ ?", "options": ["3 éléments", "5 éléments", "6 éléments", "10 éléments"], "correct": 2, "explanation": "La NPMQ définit 6 éléments : (1) Responsabilité de l'équipe dirigeante ; (2) Règles d'éthique ; (3) Acceptation/maintien des relations clients ; (4) Ressources humaines ; (5) Réalisation des missions ; (6) Suivi."}, {"theme": 3, "q": "À quel niveau d'assurance correspond la mission de procédures convenues (NP 4400) ?", "options": ["Assurance raisonnable", "Assurance modérée", "Aucune assurance, simple constat factuel", "Assurance partielle"], "correct": 2, "explanation": "La mission de procédures convenues (NP 4400) ne donne aucune assurance. Il s'agit d'une simple restitution de constats factuels sous forme de rapport détaillé."}, {"theme": 3, "q": "Quelle est la fréquence du contrôle qualité externe pour les cabinets EC de moins de 100 collaborateurs ?", "options": ["Tous les 3 ans", "Tous les 5 ans", "Tous les 6 ans", "Tous les 10 ans"], "correct": 2, "explanation": "Le contrôle qualité externe par le CSOEC s'effectue tous les 6 ans pour les cabinets EC de moins de 100 collaborateurs (5 ans au-delà). Mnémotechnique : '6 ans / 5 ans'."}, {"theme": 3, "q": "Quelle est la durée du stage d'expertise comptable ?", "options": ["1 an", "2 ans", "3 ans (dont 2 en cabinet)", "5 ans"], "correct": 2, "explanation": "Le stage d'expertise comptable est de 3 ans, dont au moins 2 ans en cabinet. Le mémoire DEC doit être déposé 6 mois avant la soutenance."}, {"theme": 3, "q": "Le mémoire DEC doit-il être déposé combien de temps avant la soutenance ?", "options": ["1 mois", "3 mois", "6 mois", "1 an"], "correct": 2, "explanation": "Le mémoire DEC doit être déposé au plus tard 6 mois avant la soutenance orale. Achille a déjà déposé son mémoire pour la session de mai 2026."}, {"theme": 3, "q": "À quelle norme correspond une mission d'attestation particulière ?", "options": ["NP 2300", "NP 2400", "NP 3100", "NP 4400"], "correct": 2, "explanation": "Les missions d'attestations particulières (chiffres ou faits ponctuels) sont régies par la NP 3100. Mnémotechnique : '23-24-31-44'."}, {"theme": 3, "q": "Une mission d'audit légal donne-t-elle une assurance absolue ?", "options": ["Oui, absolue", "Oui, garantie totale", "Non, assurance raisonnable (haute mais non absolue)", "Non, aucune assurance"], "correct": 2, "explanation": "L'audit légal donne une assurance raisonnable, qui est une assurance haute mais non absolue. Il existe toujours un risque résiduel non détecté."}, {"theme": 3, "q": "La tenue de comptabilité par l'EC est-elle considérée comme une mission NP 2300 ?", "options": ["Oui, toujours", "Non, c'est une mission distincte technique en amont", "Oui, sous certaines conditions", "Uniquement pour les TPE"], "correct": 1, "explanation": "La tenue de comptabilité est une mission technique distincte (en amont). La NP 2300 s'applique après la tenue, pour la mission de présentation des comptes."}, {"theme": 3, "q": "Quelle est la durée du mandat d'un commissaire aux comptes (mission classique) ?", "options": ["3 ans", "5 ans", "6 exercices", "9 ans"], "correct": 2, "explanation": "La durée du mandat CAC est de 6 exercices (mission classique). Pour la mission ALPE (Audit Légal Petite Entreprise), elle est de 3 exercices."}, {"theme": 3, "q": "Quels seuils déclenchent l'obligation de désigner un CAC depuis le décret du 28/02/2024 ?", "options": ["4 M€ bilan / 8 M€ CA / 50 sal.", "5 M€ bilan / 10 M€ CA / 50 sal.", "8 M€ bilan / 16 M€ CA / 50 sal.", "10 M€ bilan / 20 M€ CA / 100 sal."], "correct": 1, "explanation": "Les seuils du décret 2024-152 du 28/02/2024 : 5 M€ bilan / 10 M€ CA HT / 50 salariés (2 sur 3). Auparavant (PACTE 2019) : 4 M€ / 8 M€ / 50 sal."}, {"theme": 3, "q": "Quelle est la durée du mandat dans une mission ALPE ?", "options": ["3 exercices", "6 exercices", "10 exercices", "Indéfinie"], "correct": 0, "explanation": "La mission ALPE (Audit Légal Petite Entreprise, NEP 911) prévoit un mandat de 3 exercices, contre 6 pour la mission classique."}, {"theme": 3, "q": "Pour les EIP, quelle est la durée maximale du mandat CAC avec appel d'offres ?", "options": ["10 ans", "14 ans", "20 ans", "24 ans"], "correct": 3, "explanation": "Pour les EIP, le mandat est de 10 ans, prolongeable jusqu'à 24 ans maximum avec appel d'offres à partir de 10 ans (Règlement UE 537/2014)."}, {"theme": 3, "q": "L'EC peut-il être médiateur judiciaire ou conventionnel ?", "options": ["Non, jamais", "Oui, depuis la loi PACTE 2019", "Uniquement pour les litiges fiscaux", "Uniquement avec autorisation du juge"], "correct": 1, "explanation": "Depuis la loi PACTE de 2019, l'EC peut exercer en tant que médiateur, sous réserve d'absence de conflit d'intérêts."}, {"theme": 3, "q": "Quelle est la principale obligation au démarrage d'une mission EC selon la NP 2300 ?", "options": ["Vérifier les comptes du client", "Établir une lettre de mission annuelle", "Saisir TRACFIN", "Envoyer un devis non engageant"], "correct": 1, "explanation": "L'établissement d'une lettre de mission annuelle est obligatoire avant tout commencement d'exécution de la mission (art. 151 Code de déontologie + NP 2300)."}, {"theme": 3, "q": "Quel ratio des honoraires non-audit / audit pour les EIP est plafonné ?", "options": ["50%", "70%", "100%", "Pas de plafond"], "correct": 1, "explanation": "Pour les EIP, les honoraires non-audit (services autres que la certification) sont plafonnés à 70% des honoraires d'audit (Règlement UE 537/2014)."}, {"theme": 3, "q": "Une mission de compilation des comptes donne-t-elle une attestation ?", "options": ["Oui, comme la NP 2300", "Non, simple compilation sans assurance ni attestation", "Oui, avec une assurance modérée", "Uniquement si la NPMQ est respectée"], "correct": 1, "explanation": "La mission de compilation (ISRS 4410) consiste à présenter sous forme structurée des données comptables, sans aucune assurance ni attestation. Elle est différente de la NP 2300."}, {"theme": 3, "q": "Quelle ordonnance a modernisé en 2023 les structures d'exercice libéral (SEL) ?", "options": ["Ordonnance 2016-394", "Ordonnance 2023-77 du 8 février 2023", "Ordonnance 2024-1127", "Ordonnance 1945-2138"], "correct": 1, "explanation": "L'ordonnance n° 2023-77 du 8 février 2023 a modernisé les règles applicables aux SEL : capital, gouvernance, indépendance renforcée."}, {"theme": 3, "q": "Le devoir de conseil de l'EC est-il une obligation de résultat ou de moyens ?", "options": ["Obligation de résultat", "Obligation de moyens", "Obligation absolue", "Pas d'obligation"], "correct": 1, "explanation": "Le devoir de conseil est une obligation de moyens. L'EC doit mettre en œuvre les diligences nécessaires, sans garantir un résultat. Le manquement engage néanmoins sa responsabilité civile."}, {"theme": 3, "q": "Quelle est la conclusion d'une mission NP 2400 ?", "options": ["Une certification positive", "Une attestation de présentation", "Une conclusion exprimée 'en négatif'", "Un simple constat factuel"], "correct": 2, "explanation": "La conclusion de la NP 2400 est exprimée 'en négatif' : 'sur la base de notre examen, nous n'avons rien relevé qui nous laisse penser...' — caractéristique de l'assurance modérée."}, {"theme": 3, "q": "Quels associés peuvent constituer une SPE (Société Pluri-professionnelle d'Exercice) ?", "options": ["Uniquement EC entre eux", "EC + avocat + notaire + huissier + CAC + commissaire-priseur", "EC + médecins", "EC + agents immobiliers"], "correct": 1, "explanation": "La SPE permet le regroupement de plusieurs professions libérales réglementées : EC, avocat, notaire, huissier, CAC, commissaire-priseur (ordonnance 2016-394)."}, {"theme": 3, "q": "Quel pourcentage du capital d'une société d'expertise comptable doit être détenu par des EC ou sociétés d'EC ?", "options": ["25%", "50%", "Majoritairement (plus de 50%)", "100%"], "correct": 2, "explanation": "Le capital des sociétés d'expertise comptable doit être majoritairement détenu (plus de 50%) par des EC ou des sociétés d'EC, conformément à l'ordonnance de 1945."}, {"theme": 4, "q": "Quelle est la prescription de la responsabilité civile du CAC ?", "options": ["1 an", "3 ans (art. L. 822-18)", "5 ans (droit commun)", "10 ans"], "correct": 1, "explanation": "La responsabilité civile du CAC se prescrit par 3 ans (art. L. 822-18 C. com.) — spécificité à connaître absolument. Pour l'EC, c'est 5 ans (droit commun, art. 2224 CC)."}, {"theme": 4, "q": "Quelle est la prescription de la responsabilité civile de l'EC ?", "options": ["1 an", "3 ans", "5 ans (droit commun)", "10 ans"], "correct": 2, "explanation": "La responsabilité civile de l'EC se prescrit par 5 ans (droit commun, art. 2224 du Code civil). Mnémotechnique : '3/5' — CAC = 3 ans, EC = 5 ans."}, {"theme": 4, "q": "Combien de types de responsabilité un professionnel EC/CAC peut-il engager pour un même fait ?", "options": ["1 seul", "2 types maximum", "3 types : civile, pénale, disciplinaire (cumul possible)", "4 types"], "correct": 2, "explanation": "Trois responsabilités cumulables : civile, pénale, disciplinaire. Mnémotechnique : 'CDP'. Un même fait peut engager les trois simultanément."}, {"theme": 4, "q": "Quelle est la sanction pécuniaire maximale prononcée par la Commission des sanctions H2A pour une personne physique ?", "options": ["100 000 €", "500 000 €", "1 M€", "5 M€"], "correct": 2, "explanation": "Les sanctions pécuniaires de la H2A peuvent atteindre 1 M€ pour les personnes physiques et 5 M€ pour les personnes morales. Mnémotechnique : '1M / 5M'."}, {"theme": 4, "q": "Quelle est la sanction pécuniaire maximale prononcée par la H2A pour une personne morale ?", "options": ["1 M€", "3 M€", "5 M€", "10 M€"], "correct": 2, "explanation": "Les sanctions pécuniaires de la H2A peuvent atteindre 5 M€ pour les personnes morales (1 M€ pour les personnes physiques)."}, {"theme": 4, "q": "Depuis le 12 juin 2025, avant tout dépôt d'une plainte disciplinaire entre EC, faut-il une étape préalable obligatoire ?", "options": ["Non, plainte directe possible", "Oui, conciliation/arbitrage du président du CROEC obligatoire (art. 161 modifié)", "Uniquement pour les litiges > 50 000 €", "Uniquement entre cabinets concurrents"], "correct": 1, "explanation": "Le décret 2025-506 du 10/06/2025 (art. 161 modifié, en vigueur 12/06/2025) impose une conciliation/arbitrage préalable du président du CROEC, sous peine d'irrecevabilité de la plainte."}, {"theme": 4, "q": "Dans la nouvelle procédure de conciliation préalable (art. 161), de quels délais dispose le président du CROEC ?", "options": ["1 mois pour engager / 2 mois pour terminer", "2 mois pour engager / 4 mois pour terminer", "3 mois pour engager / 6 mois pour terminer", "Pas de délai imposé"], "correct": 1, "explanation": "Le président du CROEC dispose de 2 mois pour engager la procédure de conciliation/arbitrage et de 4 mois pour la mener à terme. Mnémotechnique : '2/4 conciliation'."}, {"theme": 4, "q": "L'avertissement disciplinaire constitue-t-il la sanction la plus légère ?", "options": ["Oui, sanction la plus légère, sans publicité", "Non, c'est le blâme", "Non, c'est la suspension", "Non, c'est la réprimande"], "correct": 0, "explanation": "L'avertissement est la sanction disciplinaire la plus légère, sans publicité. Hiérarchie : avertissement → blâme → suspension → radiation."}, {"theme": 4, "q": "La radiation du Tableau peut-elle être prononcée à titre disciplinaire ?", "options": ["Non, jamais", "Oui, c'est la sanction la plus grave", "Uniquement par le Conseil d'État", "Uniquement par le ministre de l'Économie"], "correct": 1, "explanation": "La radiation est la sanction disciplinaire la plus grave : exclusion définitive du Tableau de l'Ordre, prononcée par la Chambre régionale ou nationale de discipline."}, {"theme": 4, "q": "Quelle est la durée maximale de l'interdiction temporaire d'exercer prononcée à titre disciplinaire ?", "options": ["1 an", "3 ans", "5 ans", "10 ans"], "correct": 2, "explanation": "L'interdiction temporaire d'exercer ne peut excéder 5 ans (suspension), tant pour les EC que pour les CAC."}, {"theme": 4, "q": "Quel est le recours possible contre une décision de la Commission des sanctions de la H2A ?", "options": ["Recours devant la chambre régionale", "Recours devant le Conseil d'État", "Recours devant le tribunal correctionnel", "Aucun recours possible"], "correct": 1, "explanation": "Les décisions de la Commission des sanctions H2A sont susceptibles d'un recours devant le Conseil d'État (cassation administrative)."}, {"theme": 4, "q": "L'article 125 du Code de déontologie (modifié 2025) prévoit la radiation d'office après combien de mises en demeure ?", "options": ["1 mise en demeure", "2 mises en demeure successives", "3 mises en demeure", "Pas de mise en demeure"], "correct": 1, "explanation": "L'article 125 modifié par le décret 2025-506 prévoit 2 mises en demeure successives (au plus tôt 1 mois et au plus tard 3 mois après la première). Mnémotechnique : '125 = 2 + 30'."}, {"theme": 4, "q": "Le recours contre une décision de radiation d'office (article 125) est-il suspensif ?", "options": ["Non, jamais suspensif", "Oui, suspensif devant le comité national du tableau", "Suspensif uniquement si motivé", "Uniquement pour les personnes morales"], "correct": 1, "explanation": "Le recours dirigé devant le comité national du tableau contre une décision de radiation d'office (art. 125 modifié 2025) est suspensif."}, {"theme": 4, "q": "Pour quelle durée minimum de défaut de paiement la radiation d'office peut-elle être prononcée ?", "options": ["1 an consécutif", "2 ans, consécutifs ou non, sur les 10 dernières années", "3 ans consécutifs", "5 ans"], "correct": 1, "explanation": "L'art. 125 modifié 2025 prévoit la radiation pour défaut de paiement intégral des cotisations pendant 2 ans, consécutifs ou non, sur les 10 dernières années."}, {"theme": 4, "q": "Une mission gratuite (bénévole) de l'EC est-elle couverte par sa RCP ?", "options": ["Non, pas couverte", "Oui, couverte", "Uniquement si déclarée à l'assureur", "Uniquement sur autorisation du CROEC"], "correct": 1, "explanation": "Les missions gratuites sont couvertes par la RCP. Cela engage néanmoins la responsabilité civile professionnelle de l'EC."}, {"theme": 4, "q": "Une faute simple suffit-elle à engager la responsabilité civile du CAC ?", "options": ["Non, faute lourde requise", "Oui, faute simple suffit", "Uniquement faute intentionnelle", "Uniquement faute caractérisée"], "correct": 1, "explanation": "La faute simple (négligence dans les diligences) suffit à engager la RC du CAC. Pas besoin de faute lourde ou intentionnelle. Toute négligence peut donc engager sa responsabilité."}, {"theme": 4, "q": "Quelle juridiction connaît en première instance de la discipline des EC ?", "options": ["La H2A", "La Chambre régionale de discipline (CROEC)", "Le Conseil d'État", "Le tribunal de commerce"], "correct": 1, "explanation": "La Chambre régionale de discipline (présidée au niveau du CROEC) connaît en première instance des infractions disciplinaires des EC. Appel devant la Chambre nationale (CSOEC)."}, {"theme": 4, "q": "L'action civile peut-elle être suspendue lorsqu'une procédure pénale est engagée ?", "options": ["Non, action civile autonome", "Oui, 'le pénal tient le civil en l'état'", "Uniquement avec accord du juge", "Uniquement pour les EIP"], "correct": 1, "explanation": "Le principe 'le pénal tient le civil en l'état' permet la suspension de l'action civile pendant la procédure pénale, pour assurer la cohérence des décisions."}, {"theme": 4, "q": "Le CAC peut-il être révoqué par décision de l'AG ?", "options": ["Oui, librement", "Non, révocation exclusivement judiciaire (juste motif)", "Uniquement à la majorité des 2/3", "Uniquement après 3 ans de mandat"], "correct": 1, "explanation": "La révocation du CAC est exclusivement judiciaire (art. L. 821-46 C. com.) sur juste motif (faute, empêchement). L'AG ne peut pas le révoquer librement."}, {"theme": 4, "q": "L'EC est-il responsable des fautes commises par ses collaborateurs salariés ?", "options": ["Non, uniquement responsabilité personnelle", "Oui, responsabilité du fait d'autrui (art. 1242 CC)", "Uniquement si faute lourde", "Uniquement pour les missions principales"], "correct": 1, "explanation": "L'EC est responsable du fait de ses préposés (collaborateurs salariés) au titre de la responsabilité du fait d'autrui (art. 1242 CC). Il doit s'assurer de leur compétence et de leur supervision."}, {"theme": 4, "q": "Une décision pénale peut-elle conduire à des sanctions disciplinaires distinctes ?", "options": ["Non, uniquement la décision pénale s'applique", "Oui, indépendance des juridictions, cumul possible", "Uniquement avec autorisation du procureur", "Uniquement si la décision pénale est définitive"], "correct": 1, "explanation": "Les juridictions civile, pénale et disciplinaire sont indépendantes. Un même fait peut donner lieu à des sanctions distinctes et cumulatives."}, {"theme": 4, "q": "La constitution de partie civile permet-elle d'obtenir réparation dans le cadre de la procédure pénale ?", "options": ["Non, uniquement en parallèle", "Oui, jonction des actions civile et pénale", "Uniquement pour les délits financiers", "Uniquement avec accord du procureur"], "correct": 1, "explanation": "La victime peut se constituer partie civile pour joindre son action en réparation à la procédure pénale, obtenant ainsi des dommages-intérêts si l'auteur est condamné."}, {"theme": 4, "q": "L'EC démissionnaire de pure convenance d'une mission engage-t-il sa responsabilité ?", "options": ["Non, libre démission", "Oui, démission injustifiée = responsabilité possible", "Uniquement après 1 an de mission", "Uniquement avec préavis non respecté"], "correct": 1, "explanation": "La démission de pure convenance n'est pas admise. Elle peut engager la responsabilité disciplinaire (manquement aux devoirs professionnels) et civile (préjudice causé au client)."}, {"theme": 4, "q": "L'EC est-il tenu d'exécuter une mission gratuitement à la demande du client ?", "options": ["Oui, c'est obligatoire", "Non, mais s'il accepte, sa responsabilité est engagée", "Uniquement pour les associations", "Uniquement avec autorisation du CSOEC"], "correct": 1, "explanation": "L'EC n'est pas tenu d'exécuter une mission gratuitement. S'il accepte, sa RCP couvre cette mission et il engage sa responsabilité comme pour une mission rémunérée."}, {"theme": 1, "q": "Quel acronyme désigne l'autorité de tutelle de la profession EC ?", "options": ["CSOEC", "OEC", "AMF", "DGFiP"], "correct": 1, "explanation": "L'OEC (Ordre des Experts-Comptables) est l'organisme professionnel représentant les EC. Le CSOEC en est l'organe national. La tutelle ministérielle est l'Économie."}, {"theme": 2, "q": "Le secret professionnel est-il opposable à la H2A dans le cadre d'un contrôle qualité ?", "options": ["Oui, totalement", "Non, dérogation légale", "Uniquement pour les EIP", "Uniquement si le client donne son accord"], "correct": 1, "explanation": "Le secret professionnel n'est pas opposable à la H2A dans le cadre des contrôles qualité ou des procédures disciplinaires. C'est une dérogation légale."}, {"theme": 2, "q": "Le secret professionnel est-il opposable au procureur dans le cadre d'une révélation de faits délictueux ?", "options": ["Oui, le secret est absolu", "Non, la révélation lève le secret", "Uniquement avec autorisation du juge", "Uniquement pour les délits > 100 000 €"], "correct": 1, "explanation": "La révélation des faits délictueux au procureur lève automatiquement le secret professionnel. C'est une obligation du CAC (art. L. 823-12 C. com.)."}, {"theme": 3, "q": "Le rapport spécial sur les conventions réglementées doit être mis à disposition combien de jours avant l'AG ?", "options": ["3 jours", "8 jours", "15 jours", "1 mois"], "correct": 1, "explanation": "Le rapport spécial sur les conventions réglementées doit être mis à disposition 8 jours avant l'AG (art. L. 225-40 C. com.)."}, {"theme": 3, "q": "Le rapport du commissaire à la fusion doit être mis à disposition combien de temps avant l'AG ?", "options": ["8 jours", "15 jours", "1 mois", "2 mois"], "correct": 2, "explanation": "Le rapport du commissaire à la fusion doit être mis à disposition 1 mois avant l'AG appelée à se prononcer sur la fusion."}, {"theme": 4, "q": "Que signifie l'acronyme 'EIP' ?", "options": ["Établissement d'Information Publique", "Entité d'Intérêt Public", "Entreprise d'Importance Particulière", "Ensemble Intermédiaire Professionnel"], "correct": 1, "explanation": "EIP = Entité d'Intérêt Public. Comprend les entités cotées, banques, assurances. Soumises à des règles d'audit renforcées (rotation, plafonds honoraires)."}, {"theme": 1, "q": "Quel décret a modernisé en 2024 les règles applicables aux SPFPL d'expertise comptable ?", "options": ["Décret 2024-138", "Décret 2024-1127 du 4 décembre 2024", "Décret 2025-131", "Décret 2025-506"], "correct": 1, "explanation": "Le décret n° 2024-1127 du 4 décembre 2024 a inséré les articles 198 à 209 du Code de déontologie, créant le régime des SPFPL d'expertise comptable."}, {"theme": 2, "q": "Le BE (bénéficiaire effectif) doit-il être inscrit dans un registre ?", "options": ["Non, simple identification", "Oui, au RBE (Registre des Bénéficiaires Effectifs) depuis 2018", "Uniquement pour les sociétés cotées", "Uniquement pour les EIP"], "correct": 1, "explanation": "Depuis 2018, l'inscription du BE au RBE (Registre des Bénéficiaires Effectifs) tenu par les greffes est obligatoire (transposition de la 4e directive AML)."}, {"theme": 4, "q": "Le CAC peut-il refuser de certifier les comptes d'une entité ?", "options": ["Non, certification obligatoire", "Oui, refus de certifier (avec motivation)", "Uniquement avec accord du juge", "Uniquement pour les EIP"], "correct": 1, "explanation": "Le refus de certifier est l'une des 4 opinions possibles (avec opinion sans réserve, avec réserve, et impossibilité). Il intervient en cas de désaccord profond ou de limitation aux travaux portant sur l'ensemble des comptes."}, {"theme": 3, "q": "Quels sont les 4 niveaux d'opinion possibles d'un CAC sur les comptes ?", "options": ["Sans réserve / Avec réserve / Refus / Impossibilité", "Positif / Négatif / Neutre / Réservé", "OK / KO / Partiel / Conditionné", "Approbation / Rejet / Réserve / Renvoi"], "correct": 0, "explanation": "Les 4 opinions possibles : (1) sans réserve ; (2) avec réserve ; (3) refus de certifier ; (4) impossibilité d'exprimer une opinion (NEP 700, 705)."}, {"theme": 1, "q": "Quelle ordonnance de 2023 a renforcé les règles d'indépendance dans les SEL ?", "options": ["Ordonnance 2023-77 du 8 février 2023", "Ordonnance 2024-1127", "Loi PACTE 2019", "Loi du 31/12/1990"], "correct": 0, "explanation": "L'ordonnance n° 2023-77 du 8 février 2023 a modernisé les structures libérales (SEL), renforçant l'indépendance et encadrant les participations."}, {"theme": 2, "q": "Une convention 'courante à conditions normales' figure-t-elle dans le rapport spécial sur les conventions réglementées ?", "options": ["Oui, toujours", "Non, exclue du rapport (art. L. 225-39)", "Uniquement si > 50 000 €", "Uniquement pour les SAS"], "correct": 1, "explanation": "Les conventions courantes à conditions normales sont exclues du rapport spécial (art. L. 225-39 C. com.). Le CAC en est néanmoins informé."}, {"theme": 3, "q": "Quelle norme régit la lettre de mission du CAC ?", "options": ["NEP 200", "NEP 210", "NEP 9605", "NPMQ"], "correct": 1, "explanation": "La lettre de mission du CAC est régie par la NEP 210. Elle est annuelle, datée, signée par le client. Mnémotechnique : 'NEP 210 / 9605'."}, {"theme": 4, "q": "Quelle est la sanction du défaut de couverture continue de la RCP pour un EC ?", "options": ["Avertissement uniquement", "Radiation d'office (art. 125 modifié 2025)", "Amende administrative", "Suspension automatique"], "correct": 1, "explanation": "L'article 125 modifié par le décret 2025-506 prévoit la radiation d'office en cas d'absence de couverture continue de la RCP depuis l'inscription au tableau."}, {"theme": 1, "q": "Combien d'années doivent être passées en cabinet pendant le stage EC ?", "options": ["1 an minimum", "2 ans minimum", "Toute la durée (3 ans)", "Pas de minimum"], "correct": 1, "explanation": "Le stage EC est de 3 ans dont au moins 2 ans en cabinet. Le 3e an peut être effectué en entreprise (sous conditions)."}, {"theme": 2, "q": "L'EC peut-il accepter une mission sans avoir contacté son confrère prédécesseur ?", "options": ["Oui, sans aucune obligation", "Non, NEP 9605 + Code de déontologie imposent la communication entre confrères", "Uniquement après accord du client", "Uniquement pour les nouveaux clients"], "correct": 1, "explanation": "Le Code de déontologie (art. 161 et s.) et la NEP 9605 imposent la communication avec le confrère prédécesseur avant acceptation d'une nouvelle mission, dans le respect du secret professionnel."}, {"theme": 4, "q": "L'inscription au Tableau de l'Ordre est-elle obligatoire pour exercer la profession d'EC ?", "options": ["Non, simple recommandation", "Oui, inscription obligatoire au Tableau", "Uniquement pour les associés", "Uniquement après 5 ans d'exercice"], "correct": 1, "explanation": "L'inscription au Tableau de l'Ordre est obligatoire pour exercer la profession d'EC (titre et activité protégés). Le défaut d'inscription = exercice illégal de la profession."}, {"theme": 3, "q": "Le CAC est-il tenu de mettre à jour son dossier permanent à chaque exercice ?", "options": ["Non, mise à jour ponctuelle", "Oui, mise à jour continue (NEP 230, 315)", "Uniquement pour les EIP", "Uniquement tous les 3 ans"], "correct": 1, "explanation": "Le dossier permanent du CAC doit être maintenu à jour en continu (NEP 230 - documentation, NEP 315 - connaissance de l'entité). C'est essentiel pour la traçabilité."}, {"theme": 2, "q": "Le CAC peut-il être à la fois CAC et conseil en gestion de la même entité ?", "options": ["Oui, sans restriction", "Non, auto-révision (incompatibilité)", "Uniquement avec accord du client", "Uniquement pour les missions ponctuelles"], "correct": 1, "explanation": "Le cumul des fonctions de CAC et de conseil/EC sur la même entité est une auto-révision interdite. Le CAC ne peut pas auditer une situation qu'il a lui-même conseillée."}, {"theme": 1, "q": "Quel décret a inséré la nouvelle catégorie 'EC en entreprise' au Tableau de l'Ordre ?", "options": ["Décret 2024-138", "Décret 2024-1127", "Décret 2025-131 du 13 février 2025", "Décret 2025-506"], "correct": 2, "explanation": "Le décret n° 2025-131 du 13 février 2025 a ajouté la liste 14° du Tableau de l'Ordre : les experts-comptables en entreprise (modification de l'article 114)."}, {"theme": 4, "q": "Une décision du Conseil d'État sur une sanction H2A est-elle finale ?", "options": ["Non, recours possible", "Oui, le Conseil d'État statue en dernier ressort", "Recours devant la CEDH possible", "Recours devant le Conseil constitutionnel"], "correct": 1, "explanation": "Le Conseil d'État statue en dernier ressort sur les recours contre les décisions de la Commission des sanctions H2A. Sa décision est définitive (sauf recours européen)."}, {"theme": 3, "q": "À quelle norme correspond 'NEP 705' ?", "options": ["Lettre de mission", "Justification des opinions modifiées", "Évaluation des risques", "Continuité d'exploitation"], "correct": 1, "explanation": "La NEP 705 régit la justification des opinions modifiées du CAC (réserve, refus, impossibilité). Complète la NEP 700 sur le rapport général."}, {"theme": 2, "q": "Quelle est la fréquence d'établissement de la lettre de mission EC ?", "options": ["Une seule fois en début de mission", "Annuelle (renouvelable)", "Mensuelle", "Selon les besoins"], "correct": 1, "explanation": "La lettre de mission EC est annuelle, renouvelée à chaque exercice (art. 151 Code de déontologie). Sans elle, la mission est irrégulière."}, {"theme": 1, "q": "Quel est le principe directeur de la mission de présentation NP 2300 ?", "options": ["Audit complet des comptes", "Aucune assurance, attestation après diligences réduites", "Vérification des opérations courantes", "Conseil fiscal"], "correct": 1, "explanation": "La NP 2300 ne donne aucune assurance. L'EC effectue des diligences (entretien, examen analytique, dossier permanent) puis émet une attestation de présentation."}]</script>
+
+<script>
+  // ---------- Load questions ----------
+  const QUESTIONS = JSON.parse(document.getElementById('questions-data').textContent);
+
+  const THEMES = {
+    1: { name: "Cadre institutionnel", short: "Cadre" },
+    2: { name: "Exercice professionnel & déontologie", short: "Déontologie" },
+    3: { name: "Référentiel normatif & missions", short: "Référentiel" },
+    4: { name: "Discipline & responsabilité", short: "Discipline" },
+  };
+
+  // ---------- State ----------
+  let state = {
+    selectedThemes: new Set([1, 2, 3, 4]),
+    questionCount: 30,
+    questions: [],
+    current: 0,
+    answers: [],
+    startTime: null,
+    timerInterval: null,
+  };
+
+  // ---------- DOM helpers ----------
+  const $ = (id) => document.getElementById(id);
+  const show = (id) => { $(id).classList.remove('hidden'); };
+  const hide = (id) => { $(id).classList.add('hidden'); };
+
+  // ---------- Setup screen ----------
+  function buildThemeGrid() {
+    const grid = $('theme-grid');
+    grid.innerHTML = '';
+    Object.entries(THEMES).forEach(([num, theme]) => {
+      const count = QUESTIONS.filter(q => q.theme == num).length;
+      const btn = document.createElement('button');
+      btn.className = 'theme-chip selected';
+      btn.dataset.theme = num;
+      btn.innerHTML = `
+        <div class="theme-chip-num">${num}</div>
+        <div class="theme-chip-content">
+          <div class="theme-chip-title">${theme.short}</div>
+          <div class="theme-chip-meta">${count} questions</div>
+        </div>
+      `;
+      btn.addEventListener('click', () => {
+        const t = parseInt(btn.dataset.theme);
+        if (state.selectedThemes.has(t)) {
+          if (state.selectedThemes.size > 1) {
+            state.selectedThemes.delete(t);
+            btn.classList.remove('selected');
+          }
+        } else {
+          state.selectedThemes.add(t);
+          btn.classList.add('selected');
+        }
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  function setupQuantityButtons() {
+    $('qty-buttons').addEventListener('click', (e) => {
+      if (e.target.classList.contains('qty-btn')) {
+        document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        const n = e.target.dataset.n;
+        state.questionCount = n === 'all' ? Infinity : parseInt(n);
+      }
+    });
+  }
+
+  // ---------- Quiz logic ----------
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function startQuiz() {
+    const filtered = QUESTIONS.filter(q => state.selectedThemes.has(q.theme));
+    const shuffled = shuffle(filtered);
+    const count = state.questionCount === Infinity ? shuffled.length : Math.min(state.questionCount, shuffled.length);
+    state.questions = shuffled.slice(0, count);
+    state.current = 0;
+    state.answers = [];
+    state.startTime = Date.now();
+
+    hide('setup-screen');
+    show('quiz-screen');
+
+    $('q-total').textContent = state.questions.length;
+    startTimer();
+    renderQuestion();
+  }
+
+  function startTimer() {
+    state.timerInterval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - state.startTime) / 1000);
+      const m = Math.floor(elapsed / 60).toString().padStart(2, '0');
+      const s = (elapsed % 60).toString().padStart(2, '0');
+      $('timer').textContent = `${m}:${s}`;
+    }, 1000);
+  }
+
+  function stopTimer() {
+    clearInterval(state.timerInterval);
+  }
+
+  function renderQuestion() {
+    const q = state.questions[state.current];
+    $('q-num').textContent = state.current + 1;
+    $('progress-bar').style.width = ((state.current) / state.questions.length * 100) + '%';
+    $('theme-badge').textContent = `Thème ${q.theme} — ${THEMES[q.theme].short}`;
+    $('question-text').textContent = q.q;
+
+    const optionsList = $('options');
+    optionsList.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+    q.options.forEach((opt, idx) => {
+      const li = document.createElement('li');
+      li.className = 'option';
+      li.dataset.idx = idx;
+      li.innerHTML = `
+        <div class="option-letter">${letters[idx]}</div>
+        <div>${opt}</div>
+      `;
+      li.addEventListener('click', () => selectAnswer(idx));
+      optionsList.appendChild(li);
+    });
+
+    hide('feedback');
+    hide('next-btn');
+    // Trigger card animation
+    const card = $('question-card');
+    card.style.animation = 'none';
+    card.offsetHeight; // force reflow
+    card.style.animation = '';
+  }
+
+  function selectAnswer(idx) {
+    const q = state.questions[state.current];
+    const correct = q.correct;
+    const isCorrect = idx === correct;
+
+    state.answers.push({ qIdx: state.current, selected: idx, correct: isCorrect });
+
+    // Highlight options
+    document.querySelectorAll('.option').forEach((el, i) => {
+      el.classList.add('disabled');
+      el.removeEventListener('click', () => {});
+      if (i === correct) el.classList.add('correct');
+      if (i === idx && !isCorrect) el.classList.add('wrong');
+    });
+
+    // Show feedback
+    const feedback = $('feedback');
+    feedback.classList.remove('hidden', 'correct', 'wrong');
+    feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+    $('feedback-label').textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+    $('feedback-text').textContent = q.explanation;
+
+    // Show next button
+    show('next-btn');
+    $('next-btn').focus();
+
+    // Update progress bar
+    $('progress-bar').style.width = ((state.current + 1) / state.questions.length * 100) + '%';
+  }
+
+  function nextQuestion() {
+    state.current++;
+    if (state.current >= state.questions.length) {
+      finishQuiz();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function finishQuiz() {
+    stopTimer();
+    hide('quiz-screen');
+    show('results-screen');
+
+    const total = state.questions.length;
+    const correct = state.answers.filter(a => a.correct).length;
+    const pct = Math.round((correct / total) * 100);
+    const elapsed = Math.floor((Date.now() - state.startTime) / 1000);
+    const m = Math.floor(elapsed / 60);
+    const s = elapsed % 60;
+    const timeStr = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    const avg = Math.round(elapsed / total);
+
+    $('score-pct').textContent = pct;
+    $('score-correct').textContent = correct;
+    $('score-total').textContent = total;
+    $('stat-correct').textContent = correct;
+    $('stat-wrong').textContent = total - correct;
+    $('stat-time').textContent = timeStr;
+    $('stat-avg').textContent = avg + 's';
+
+    let message = "";
+    if (pct >= 90) message = "Excellent. Vous maîtrisez ces thèmes.";
+    else if (pct >= 75) message = "Très bonne maîtrise. Quelques points à consolider.";
+    else if (pct >= 60) message = "Niveau correct. Continuez à réviser les thèmes faibles.";
+    else if (pct >= 40) message = "Plusieurs notions à revoir. Reprenez les fiches puis recommencez.";
+    else message = "Il reste du travail. Concentrez-vous sur les fiches Épreuve 1.";
+    $('score-message').textContent = `« ${message} »`;
+
+    // Theme breakdown
+    const breakdown = $('theme-breakdown');
+    breakdown.innerHTML = '';
+    [1, 2, 3, 4].forEach(themeNum => {
+      const themeAnswers = state.answers.filter(a => state.questions[a.qIdx].theme === themeNum);
+      if (themeAnswers.length === 0) return;
+      const themeCorrect = themeAnswers.filter(a => a.correct).length;
+      const themePct = Math.round(themeCorrect / themeAnswers.length * 100);
+      const div = document.createElement('div');
+      div.className = 'theme-bar';
+      div.innerHTML = `
+        <div class="theme-bar-label">Thème ${themeNum} — ${THEMES[themeNum].short}</div>
+        <div class="theme-bar-track">
+          <div class="theme-bar-fill" style="width:0%"></div>
+        </div>
+        <div class="theme-bar-score">${themeCorrect}/${themeAnswers.length}</div>
+      `;
+      breakdown.appendChild(div);
+      // Animate
+      setTimeout(() => {
+        div.querySelector('.theme-bar-fill').style.width = themePct + '%';
+      }, 100);
+    });
+
+    // Build review list
+    const reviewList = $('review-list');
+    reviewList.innerHTML = '';
+    state.answers.forEach((a, i) => {
+      const q = state.questions[a.qIdx];
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      const letters = ['A', 'B', 'C', 'D'];
+      item.innerHTML = `
+        <div class="review-item-meta">
+          <span class="theme-badge">Thème ${q.theme}</span>
+          <span class="review-status ${a.correct ? 'correct' : 'wrong'}">${a.correct ? '✓ Correct' : '✗ Incorrect'}</span>
+        </div>
+        <div class="review-item-q">${i + 1}. ${q.q}</div>
+        <div class="review-item-answers">
+          <strong>Bonne réponse :</strong> ${letters[q.correct]}. ${q.options[q.correct]}
+          ${!a.correct ? `<br><strong>Votre réponse :</strong> ${letters[a.selected]}. ${q.options[a.selected]}` : ''}
+        </div>
+        <div class="review-item-explanation">${q.explanation}</div>
+      `;
+      reviewList.appendChild(item);
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function quitQuiz() {
+    if (state.answers.length === 0) {
+      if (!confirm("Aucune réponse enregistrée. Retour à l'accueil ?")) return;
+      stopTimer();
+      hide('quiz-screen');
+      show('setup-screen');
+      return;
+    }
+    if (confirm("Terminer la session maintenant et voir les résultats ?")) {
+      // Pad answers if not all answered
+      while (state.answers.length < state.questions.length) {
+        state.answers.push({ qIdx: state.answers.length, selected: -1, correct: false });
+      }
+      finishQuiz();
+    }
+  }
+
+  // ---------- Event listeners ----------
+  $('start-btn').addEventListener('click', startQuiz);
+  $('next-btn').addEventListener('click', nextQuestion);
+  $('quit-btn').addEventListener('click', quitQuiz);
+  $('restart-btn').addEventListener('click', () => {
+    hide('results-screen');
+    show('setup-screen');
+    $('review-list').classList.remove('visible');
+    $('review-btn').textContent = 'Revoir les questions';
+  });
+  $('review-btn').addEventListener('click', () => {
+    const list = $('review-list');
+    if (list.classList.contains('visible')) {
+      list.classList.remove('visible');
+      $('review-btn').textContent = 'Revoir les questions';
+    } else {
+      list.classList.add('visible');
+      $('review-btn').textContent = 'Masquer la révision';
+      list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    const quizActive = !$('quiz-screen').classList.contains('hidden');
+    if (!quizActive) return;
+    const feedbackVisible = !$('feedback').classList.contains('hidden');
+
+    if (feedbackVisible && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      nextQuestion();
+      return;
+    }
+
+    if (!feedbackVisible) {
+      const keyToIdx = { 'a': 0, 'A': 0, '1': 0, 'b': 1, 'B': 1, '2': 1, 'c': 2, 'C': 2, '3': 2, 'd': 3, 'D': 3, '4': 3 };
+      if (keyToIdx.hasOwnProperty(e.key)) {
+        const idx = keyToIdx[e.key];
+        const q = state.questions[state.current];
+        if (q && idx < q.options.length) selectAnswer(idx);
+      }
+    }
+  });
+
+  // ---------- Init ----------
+  buildThemeGrid();
+  setupQuantityButtons();
+</script>
+
+</body>
+</html>
